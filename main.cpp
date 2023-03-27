@@ -2,12 +2,13 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <bits/stdc++.h>
+//#include <glm/gtc/type_ptr.hpp>
+//#include <bits/stdc++.h>
 #include <Shader/shader.h>
-#include <Geometry/geometry.h>
-#include <stb_image/std_image.h>
+//#include <Geometry/geometry.h>
 #include <Camera/carena.h>
+#include <Model/model.h>
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -66,11 +67,14 @@ int main()
         return -1;
     }
 
+    stbi_set_flip_vertically_on_load(true);
+
     glEnable(GL_DEPTH_TEST);
 
-    Shader ourShader("/Users/yuria20/CLionProjects/learnOpenGL/resources/VertexShader.vert",
-                     "/Users/yuria20/CLionProjects/learnOpenGL/resources/FragmentShader.frag");
+    Shader ourShader("C:/Users/user/CLionProjects/opengl/resources/VertexShader.vert",
+                     "C:/Users/user/CLionProjects/opengl/resources/FragmentShader.frag");
 
+    Model ourModel("C:/Users/user/Desktop/backpack/BackPack.obj");
 
     // render loop
     // -----------
@@ -90,15 +94,18 @@ int main()
 
         ourShader.use();
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        ourShader.setMat4("projection", projection);
-
-        // camera/view transformation
         glm::mat4 view = camera.GetViewMatrix();
+        ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
+        // render the loaded model
         glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
-        Draw_Circle(ourShader, 1.0f);
+
+        ourModel.Draw(ourShader);
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
