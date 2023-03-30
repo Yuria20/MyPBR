@@ -1,14 +1,24 @@
-# opengl
+# 소개  
+PBR 만들고 있습니다  
 
-CLion 으로 작성된 opengl 템플릿 입니다.<br/>
-윈도우 64bit 용 템플릿과 macOS arm64 용 템플릿입니다.<br/>
-빌드가 안될시 Cmakelist, shader source 의 경로, glfw3 & assimp 가 현재 운영체제에 맞는지 확인해보세요.<br/><br/>
-includes 폴더에는 헤더파일들이 속해있습니다.<br/>
-libs 폴더에는 라이브러리들이 속해있습니다.<br/>
-resource 폴더에는 shader source 나 image, model 들이 속해있습니다.<br/>
+# 구성  
+1.빛  
+-DirectLight, PointLight, SpotLight,  
+ Shadow, Mirror  
+   
+2.기타(미분류)    
+-물의 흐름(바람 = 공기의 이동)  
+-불의 표현  
+-기체의 표현  
+-중력의 작용  
 
-# geomtry.h 
+  
+2.카메라  
+-망원경(near 를 더 멀리), 시야를 흐릿하게(blur 처리), 각 축에서의 수직관찰  
 
-geometry.h 는 제가 작성하는 헤더파일입니다.<br/>
-다양한 평면도형, 입체도형을 렌더링하는 함수들이 적혀있습니다.<br/>
-(원, 타원, 별 등등)<br/>
+3.오브젝트  
+-마인크래프트케릭터(큐브로 만들어짐,얼굴 부분을 카메라의 위치로)  
+카메라 위치가 바뀔때 케릭터의 팔다리도 움직이게 하기  
+
+
+ 
